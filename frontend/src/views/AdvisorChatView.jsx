@@ -11,11 +11,9 @@ export default function AdvisorChatView() {
     e.preventDefault();
     if (!input.trim()) return;
     
-    // Add user message
     setMessages(prev => [...prev, { id: Date.now(), sender: 'user', text: input }]);
     setInput('');
 
-    // Simulate AI response
     setTimeout(() => {
       setMessages(prev => [...prev, { 
         id: Date.now(), 
@@ -27,13 +25,12 @@ export default function AdvisorChatView() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-60px)] bg-slate-50">
-      
       <div className="bg-white border-b border-slate-100 p-4 flex items-center gap-3 shrink-0">
         <div className="bg-teal-100 p-2 rounded-full">
           <Sparkles className="w-5 h-5 text-teal-600" />
         </div>
         <div>
-          <h2 className="font-bold text-slate-900 leading-tight">GigShield Advisor</h2>
+          <h2 className="font-bold text-slate-900 leading-tight">GigShield AI</h2>
           <p className="text-xs text-teal-600 font-medium flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-teal-500 inline-block"></span> Online
           </p>
