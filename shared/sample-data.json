@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "usr_001",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "role": "gig_worker",
+      "riskScore": 12,
+      "shieldActive": true
+    }
+  ],
+  "policies": [
+    {
+      "id": "pol_001",
+      "title": "Income Protection Shield",
+      "coverage": 5000,
+      "premium": 15,
+      "status": "active"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm_001",
+      "userId": "usr_001",
+      "amount": 250,
+      "status": "approved",
+      "createdAt": "2026-07-31T10:00:00Z"
+    }
+  ]
+}
