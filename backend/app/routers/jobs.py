@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 from app.schemas.gig import JobCreate, ChatRequest
 from app.services.fairness_service import calculate_fairness
-from app.services.ai_service import extract_job_from_image, generate_chat_response
+from app.services.ocr_service import extract_job_from_image, generate_chat_response
 
 router = APIRouter(prefix="/api", tags=["GigShield Contract"])
 
