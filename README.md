@@ -1,6 +1,6 @@
 # GigShield
 
-Submission for the [Hackathon Name]
+Submission for the [SYNAPTRIX]
 
 ## Problem Statement Chosen
 **Domain:** GigShield
