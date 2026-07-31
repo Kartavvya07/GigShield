@@ -62,11 +62,12 @@ cp .env.example .env
 # Run the backend server
 uvicorn app.main:app --reload --port 8000
 
+```
 
 
 
-
-FRONTEND SETUP
+###FRONTEND SETUP
+```
 # Navigate to the frontend directory
 cd frontend
 
@@ -80,8 +81,9 @@ cp .env.example .env
 npm run dev
 
 
-
-API Keys / Environment Variables
+```
+### API Keys / Environment Variables
+```
 Do not hardcode API keys or upload them directly to GitHub.
 
 Backend Requirements (backend/.env):
