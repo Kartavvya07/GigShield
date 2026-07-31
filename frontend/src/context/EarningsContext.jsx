@@ -1,26 +1,86 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
+import { getJobs, createJob, deleteJob, getDashboardSummary } from '../api';
 
 export const EarningsContext = createContext();
 
 export const EarningsProvider = ({ children }) => {
-  const [jobs, setJobs] = useState([
-    { id: 1, platform: 'Zepto', fare: 48, time: 2.1, distance: 12, isFlagged: true },
-    { id: 2, platform: 'Swiggy', fare: 120, time: 1.8, distance: 8, isFlagged: false },
-  ]);
-  
-  const [alerts, setAlerts] = useState([
-    { id: 1, message: "Zepto delivery paid ₹48 for 2.1 hrs — below the ₹70/hr fair floor." }
-  ]);
+  const [jobs, setJobs] = useState([]);
+  const [dashboardSummary, setDashboardSummary] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const logJob = (newJob) => {
-    setJobs(prev => [newJob, ...prev]);
-    if (newJob.fare / newJob.time < 70) {
-      setAlerts(prev => [{ id: Date.now(), message: `New trip flagged: Below minimum hourly rate.` }, ...prev]);
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const [jobsRes, dashboardRes] = await Promise.all([
+        getJobs(),
+        getDashboardSummary(),
+      ]);
+
+      if (jobsRes.data) {
+        setJobs(jobsRes.data);
+      }
+      if (dashboardRes.data) {
+        setDashboardSummary(dashboardRes.data);
+      }
+    } catch (err) {
+      console.error('[EarningsContext Error]:', err);
+      setError(err?.message || 'Failed to sync earnings data from server');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const logJob = async (jobInput) => {
+    setIsLoading(true);
+    try {
+      const res = await createJob(jobInput);
+      if (res.data) {
+        await loadData();
+      }
+      return res.data;
+    } catch (err) {
+      console.error('[logJob Error]:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const removeJob = async (id) => {
+    setIsLoading(true);
+    try {
+      await deleteJob(id);
+      await loadData();
+    } catch (err) {
+      console.error('[removeJob Error]:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Flagged jobs filter
+  const flaggedJobs = jobs.filter((j) => j.isFair === false);
+
   return (
-    <EarningsContext.Provider value={{ jobs, alerts, logJob }}>
+    <EarningsContext.Provider
+      value={{
+        jobs,
+        dashboardSummary,
+        flaggedJobs,
+        isLoading,
+        error,
+        refreshData: loadData,
+        logJob,
+        removeJob,
+      }}
+    >
       {children}
     </EarningsContext.Provider>
   );
