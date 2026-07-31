@@ -12,7 +12,6 @@ export default function JobLoggerView() {
 
   const handleScan = () => {
     setIsScanning(true);
-    // Simulate OCR delay
     setTimeout(() => {
       setIsScanning(false);
       setFare('145');
