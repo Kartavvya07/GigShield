@@ -9,7 +9,6 @@ export default function DashboardView() {
 
   return (
     <div className="p-5 space-y-6 animate-fade-in pb-20">
-      
       <div>
         <h2 className="text-2xl font-black text-slate-900">Weekly Overview</h2>
         <p className="text-slate-500 font-medium">Last 7 days</p>
