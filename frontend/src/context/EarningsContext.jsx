@@ -14,7 +14,6 @@ export const EarningsProvider = ({ children }) => {
 
   const logJob = (newJob) => {
     setJobs(prev => [newJob, ...prev]);
-    // Mock fairness check
     if (newJob.fare / newJob.time < 70) {
       setAlerts(prev => [{ id: Date.now(), message: `New trip flagged: Below minimum hourly rate.` }, ...prev]);
     }
