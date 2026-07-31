@@ -1,0 +1,142 @@
+{
+  "contractName": "GigShield API Contract Specification",
+  "version": "1.0.0",
+  "targetBackend": "Python (FastAPI)",
+  "targetFrontend": "React + Vite + TypeScript",
+  "communicationFormat": "REST APIs (application/json & multipart/form-data)",
+  "endpoints": [
+    {
+      "name": "OCR Screenshot Analysis",
+      "path": "/api/ocr/analyze",
+      "method": "POST",
+      "contentType": "multipart/form-data",
+      "description": "Uploads a payout screenshot and extracts platform payout details.",
+      "request": {
+        "formData": [
+          {
+            "key": "file",
+            "type": "file",
+            "acceptedFormats": ["image/*"]
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "status": "success",
+          "data": {
+            "platform": "Zomato",
+            "payout_received": 120.0,
+            "distance_km": 8.5,
+            "duration_mins": 35.0,
+            "raw_text": "Sample extracted screenshot text"
+          }
+        }
+      }
+    },
+    {
+      "name": "Fairness Calculator",
+      "path": "/api/fairness/calculate",
+      "method": "POST",
+      "contentType": "application/json",
+      "description": "Calculates fairness score and breakdown for a gig payout.",
+      "request": {
+        "body": {
+          "platform": "Zomato",
+          "distance_km": 14.0,
+          "duration_mins": 50.0,
+          "payout_received": 45.0,
+          "fuel_price": 102.5
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "status": "success",
+          "evaluation": {
+            "fairness_score": 42,
+            "is_fair": false,
+            "effective_hourly_rate": 54.0,
+            "estimated_fuel_cost": 35.0,
+            "net_payout": 10.0,
+            "recommendation": "Payout is below standard floor rate for high-distance peak traffic delivery."
+          }
+        }
+      }
+    },
+    {
+      "name": "Gig Opportunities & Jobs",
+      "path": "/api/jobs",
+      "method": "GET",
+      "contentType": "application/json",
+      "description": "Fetches available platform opportunities and demand zone details.",
+      "queryParams": [
+        { "name": "platform", "type": "string", "required": false },
+        { "name": "location", "type": "string", "required": false },
+        { "name": "min_pay", "type": "number", "required": false }
+      ],
+      "response": {
+        "status": 200,
+        "body": {
+          "status": "success",
+          "count": 1,
+          "jobs": [
+            {
+              "id": "job_101",
+              "platform": "Porter",
+              "location": "Indiranagar",
+              "estimated_pay": 250.0,
+              "distance_km": 12.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Generate Grievance Complaint Draft",
+      "path": "/api/complaint/draft",
+      "method": "POST",
+      "contentType": "application/json",
+      "description": "Generates a formal complaint email draft using Gemini AI.",
+      "request": {
+        "body": {
+          "platform": "Zomato",
+          "issue_type": "Unfair Payout for High Distance",
+          "details": "Order took 50 minutes in peak traffic across 14 km, base pay was under-calculated.",
+          "distance_km": 14.0,
+          "payout_received": 45.0,
+          "expected_payout": 95.0,
+          "worker_name": "Delivery Partner"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "status": "success",
+          "complaint_draft": "Subject: Formal Grievance Regarding Order # [Order ID] - Unfair Payout\n\nDear Zomato Support Team,\n..."
+        }
+      }
+    },
+    {
+      "name": "Translate Text",
+      "path": "/api/translate",
+      "method": "POST",
+      "contentType": "application/json",
+      "description": "Translates text into target indicative Indian regional languages.",
+      "request": {
+        "body": {
+          "text": "Your total payout for this delivery is 120 rupees including surge bonus.",
+          "target_lang": "kn"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "original_text": "Your total payout for this delivery is 120 rupees including surge bonus.",
+          "translated_text": "ಸರ್ಜ್ ಬೋನಸ್ ಸೇರಿದಂತೆ ಈ ವಿತರಣೆಗೆ ನಿಮ್ಮ ಒಟ್ಟು ಪಾವತಿ 120 ರೂಪಾಯಿಗಳು.",
+          "target_lang": "kn"
+        }
+      }
+    }
+  ]
+}
