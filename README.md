@@ -66,7 +66,7 @@ uvicorn app.main:app --reload --port 8000
 
 
 
-###FRONTEND SETUP
+FRONTEND SETUP
 ```
 # Navigate to the frontend directory
 cd frontend
