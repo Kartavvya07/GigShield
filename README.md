@@ -7,7 +7,7 @@ Submission for the [Hackathon Name]
 **Problem Statement:** Gig workers face inconsistent earnings and lack the tools to quickly verify if their payout is fair based on distance, time, and operating costs, making dispute resolution difficult.
 
 ## Team
-**Team Name:** [Your Team Name]
+**Team Name:** [MIDNIGHT COMMITS]
 
 ## Our Solution
 GigShield is an automated protection and safety net platform designed to advocate for gig workers in India. It empowers delivery and ride-hailing workers by providing tools to track, evaluate, and dispute their earnings. Workers can easily log shifts by uploading screenshots, which are processed via AI to extract payout details. The system calculates a fairness score, flags underpaid jobs, and features an AI advisor that can draft formal grievance emails and provide weekly strategic insights.
